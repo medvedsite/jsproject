@@ -64,6 +64,7 @@ ExpensesBtn.addEventListener('click', function () {
             console.log('done');
             appData.expenses[a] = b;
             sum += +b;
+            appData.sum = sum;
         } else {
             console.log('Произошла ошибка');
             i--;
@@ -81,10 +82,11 @@ approveOptionalExpensesBtn.addEventListener('click', function () {
 });
 
 countBudgetBtn.addEventListener('click', function () {
-    if (appData.budget != undefined) {
+    if (appData.budget != undefined && appData.sum != undefined) {
 
-        appData.dailyMoney = (appData.budget / 30).toFixed();
+        appData.dailyMoney = (appData.budget - appData.sum) / (30).toFixed();
         dayBudgetValue.textContent = appData.dailyMoney;
+       /*  budgetValue.textContent = appData.budget - appData.sum; // можно поменять */ 
 
 
         if (appData.dailyMoney < 400) {
@@ -94,8 +96,11 @@ countBudgetBtn.addEventListener('click', function () {
         } else if (appData.dailyMoney > 1001) {
             levelValue.textContent = 'Высокий уровень дохода';
         }
+    } else if (appData.sum == undefined) {
+        appData.dailyMoney = (appData.budget / 30).toFixed();
+        dayBudgetValue.textContent = appData.dailyMoney;
     } else {
-        dayBudgetValue.textContent = 'Введите бюджет на месяц';
+        appData.dayBudgetValue.textContent = 'Введите бюджет';
     }
 
 });
